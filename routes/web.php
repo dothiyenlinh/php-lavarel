@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index');
 Route::get('/trang-chu', 'HomeController@index');
 Route::post('/tim-kiem', 'HomeController@search' );
+Route::get('/all-customer', 'HomeController@all_customer');
 
 
 //Danh-muc-san-pham
@@ -48,6 +49,7 @@ Route::post('/update-product/{product_id}', 'ProductController@update_product');
 
 //Cart
 Route::post('/save-cart', 'CartController@save_cart');
+Route::get('/save-cart', 'CartController@save_cart');
 Route::get('/show-cart', 'CartController@show_cart');
 Route::get('/delete-to-cart/{rowId}', 'CartController@delete_to_cart');
 Route::post('/update-cart-quantity', 'CartController@update_cart_quantity');

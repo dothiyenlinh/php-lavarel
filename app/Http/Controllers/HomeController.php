@@ -28,4 +28,11 @@ class HomeController extends Controller
 
     	return view('pages.sanpham.search')->with('category',$cate_product)->with('search_product',$search_product);
     }
+
+    public function all_customer()
+    {
+        $all_customer = DB::table('tbl_customers')->get();
+        $manager_customer = view('admin.all_customer')->with('all_customer', $all_customer);
+        return view('admin_layout')->with('admin.all_customer', $manager_customer);
+    }
 }

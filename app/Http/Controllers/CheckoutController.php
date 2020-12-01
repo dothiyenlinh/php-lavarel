@@ -121,11 +121,15 @@ class CheckoutController extends Controller
             DB::table('tbl_order_details')->insert($order_d_data);
         }
         if($data['payment_method']==1){
-            return Redirect::to('/handcash');
+            Cart::destroy();
+            $cate_product = DB::table('tbl_category_product')->where('Category_status','1')->orderBy('category_id', 'desc')->get();
+            return view('pages.checkout.handcash')->with('category', $cate_product);
         }
 
         else{
-            return Redirect::to('/handcash');
+            Cart::destroy();
+            $cate_product = DB::table('tbl_category_product')->where('Category_status','1')->orderBy('category_id', 'desc')->get();
+            return view('pages.checkout.handcash')->with('category', $cate_product);
         }
     }
 

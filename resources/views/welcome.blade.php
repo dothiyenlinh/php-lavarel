@@ -4,9 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
+
+    <!-- Seo meta -->
+    <meta name="description" content={{$meta_desc}}>
+    <meta name="keywords" content={{$meta_keywords}} />
+    <meta name="robots" content="INDEX,FOLLOW" />
+    <link rel="canonical" href="{{$url_canonical}}" />
     <meta name="author" content="">
-    <title>Home | ToCoToCo</title>
+    <link rel="icon" type="image/x-icon" href="" />
+    <!-- Seo meta -->
+
+    <meta property="og:site_name" content="http://localhost:8080/trasuatoco/" />
+
+    <title>{{$meta_title}}</title>
     <base href="{{asset('')}}">
     <link href="{{ asset('public/frontend/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/frontend/css/font-awesome.min.css') }}" rel="stylesheet">
@@ -30,32 +40,44 @@
             <div class="container">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
                             <div class="contactinfo">
                                 <ul class="nav nav-pills">
-                                    <li><a href="#"><i class="fa fa-phone"></i> 0123012301</a></li>
-                                    <li><a href="#"><i class="fa fa-envelope"></i> dolinh.17.09.99@gmail.com</a></li>
-                                    <li><a href="https://www.facebook.com/LinhCuteeeeeeeeeee/"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="https://www.instagram.com/dtyl_in/?hl=vi"><i class="fa fa-linkedin"></i></a></li>
+                                    <li>
+                                        <?php
+                                        $customer_id = Session::get('customer_id');
+                                        if ($customer_id != NULL) {
+                                        ?>
+                                    <li><a href="{{URL::to('/logout-checkout')}}"><i class="fa fa-lock"></i> {{__('Đăng xuất')}}</a></li>
+                                <?php
+                                        } else {
+                                ?>
+                                    <li><a href="{{URL::to('/login')}}"><i class="fa fa-lock"></i> {{__('Đăng nhập')}}</a></li>
+                                <?php
+                                        }
+                                ?></li>
+                                <li><a href="https://www.facebook.com/dolinh179/"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="https://www.instagram.com/dtyl_in/?hl=vi"><i class="fa fa-linkedin"></i></a></li>
+
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-7">
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
-                                    <li><a href="{{URL::to('/show-cart')}}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
-                                    <?php
-                                    $customer_id = Session::get('customer_id');
-                                    if($customer_id!=NULL){
-                                    ?>
-                                    <li><a href="{{URL::to('/logout-checkout')}}"><i class="fa fa-lock"></i> Đăng xuất</a></li>
-                                    <?php
-                                    }else{
-                                    ?>
-                                    <li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-lock"></i> Đăng nhập</a></li>
-                                    <?php
-                                    }
-                                    ?>
+                                    <li><a href="trang-chu" class="active">{{__('Trang Chủ')}}</a></li>
+
+                                    <li><a href="san-pham">{{__('Sản Phẩm')}}</a></li>
+                                    <li><a href="contact">{{__('Liên Hệ')}}</a></li>
+
+                                    <li><a href="{{URL::to('/show-cart')}}">{{__('Giỏ Hàng')}}</a></li>
+                                    <li class="dropdown"><a href="#">{{__('Ngôn Ngữ')}}<i class="fa fa-angle-down"></i></a>
+                                        <ul role="menu" class="sub-menu">
+                                            <li><a href="{{URL::to('language',['vi'])}}">{{__('Tiếng Việt')}}</a></li>
+                                            <li><a href="{{URL::to('language',['en'])}}">{{__('Tiếng Anh')}}</a></li>
+                                        </ul>
+                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -66,38 +88,15 @@
         <!--/header-middle-->
 
         <div class="header-bottom">
-            <!--header-bottom-->
+
             <div class="container">
                 <div class="row">
                     <div class="col-sm-9">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        </div>
-                        <div class="mainmenu pull-left">
-                            <ul class="nav navbar-nav collapse navbar-collapse">
-                                <li><a href="trang-chu" class="active">Trang chủ</a></li>
-                                <li class="dropdown"><a href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="trang-chu">Tin tức</a></li>
-                                <li><a href="{{URL::to('/show-cart')}}">Giỏ hàng</a></li>
-                                <li><a href="contact-us.html">Liên hệ</a></li>
-                            </ul>
-                        </div>
                     </div>
                     <div class="col-sm-3">
                         <form action="{{URL::to('/tim-kiem')}}" method="POST">
                             {{csrf_field()}}
-                            <input name="keyworks_submit" class="form-control form-control-sm" type="text" placeholder="Search" aria-label="Search">
-                            <!-- <input name="keyworks_submit" class="" type="text" placeholder="Search" aria-label="Search">
-                            <input type="submit" name="search_item" class="btn-primary btn-sm" value="Tìm kiếm"> -->
+                            <input name="keyworks_submit" class="form-control form-control-sm" type="text" placeholder="{{__('Tìm kiếm')}}" aria-label="Search">
                         </form>
                     </div>
                 </div>
@@ -105,15 +104,13 @@
         </div>
         <!--/header-bottom-->
     </header>
-    <!--/header-->
-    <!-- <img style="margin-left: 5%; height: 30px; margin-bottom: 5%;" src="public/frontend/images/banner4.png" alt="" /> -->
 
     <section id="slider">
         <!--slider-->
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
                             <li data-target="#slider-carousel" data-slide-to="1"></li>
@@ -123,44 +120,38 @@
                         <div class="carousel-inner">
                             <div class="item active">
                                 <div class="col-sm-6">
-                                    <h1><span></span>Welcome Tocotoco</h1>
-                                    <h2>TocoToco – Trà sữa của hạnh phúc</h2>
-                                    <p>Với sứ mệnh mang tới niềm vui và hạnh phúc, TocoToco hy vọng sẽ tạo nên một nét văn hóa giải trí bên cạnh ly trà sữa Ngon – sạch – tươi </p>
-                                    <!-- <button type="button" class="btn btn-default get">Đặt hàng</button> -->
-                                    <img src="public/frontend/images/icon_ts.jpg" alt="" />
+                                    <img style="height: 290px; width: 1024px;" src="public/frontend/images/tcsoi.jpg" class="girl img-responsive" alt="" />
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="public/frontend/images/tcsoi.jpg" class="girl img-responsive" alt="" />
-                                    <!-- <img src="public/frontend/images/pricing.png" class="pricing" alt="" /> -->
+                                    <h1><span></span>Welcome Tocotoco</h1>
+                                    <h2>{{__('TocoToco – Trà sữa của hạnh phúc')}}</h2>
+                                    <p>{{__('Với sứ mệnh mang tới niềm vui và hạnh phúc, TocoToco hy vọng sẽ tạo nên một nét văn hóa giải trí bên cạnh ly trà sữa Ngon – sạch – tươi ')}}</p>
+                                    <img src="public/frontend/images/icon_ts.jpg" alt="" />
                                 </div>
                             </div>
                             <div class="item">
+
                                 <div class="col-sm-6">
-                                    <h1><span></span>Welcome Tocotoco</h1>
-                                    <h2>TocoToco – Trà sữa của hạnh phúc</h2>
-                                    <p>Với sứ mệnh mang tới niềm vui và hạnh phúc, TocoToco hy vọng sẽ tạo nên một nét văn hóa giải trí bên cạnh ly trà sữa Ngon – sạch – tươi </p>
-                                    <img src="public/frontend/images/icon_ts.jpg" alt="" />
-                                    <!-- <button type="button" class="btn btn-default get">Đặt hàng</button> -->
-                                    
+                                    <img style="height: 290px; width: 1024px;" src="public/frontend/images/banner5.jpg" class="girl img-responsive" alt="" />
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="public/frontend/images/banner5.jpg" class="girl img-responsive" alt="" />
-                                    <!-- <img src="public/frontend/images/pricing.png" class="pricing" alt="" /> -->
+                                    <h1><span></span>Welcome Tocotoco</h1>
+                                    <h2>{{__('TocoToco – Trà sữa của hạnh phúc')}}</h2>
+                                    <p>{{__('Với sứ mệnh mang tới niềm vui và hạnh phúc, TocoToco hy vọng sẽ tạo nên một nét văn hóa giải trí bên cạnh ly trà sữa Ngon – sạch – tươi ')}}</p>
+                                    <img src="public/frontend/images/icon_ts.jpg" alt="" />
                                 </div>
                             </div>
 
                             <div class="item">
+
                                 <div class="col-sm-6">
-                                    <h1><span></span>Welcome Tocotoco</h1>
-                                    <h2>TocoToco – Trà sữa của hạnh phúc</h2>
-                                    <p>Với sứ mệnh mang tới niềm vui và hạnh phúc, TocoToco hy vọng sẽ tạo nên một nét văn hóa giải trí bên cạnh ly trà sữa Ngon – sạch – tươi </p>
-                                    <img src="public/frontend/images/icon_ts.jpg" alt="" />
-                                    <!-- <button type="button" class="btn btn-default get">Đặt hàng</button> -->
-                                    
+                                    <img style="height: 290px; width: 1024px;" src="public/frontend/images/banner1.png" class="girl img-responsive" alt="" />
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="public/frontend/images/banner1.png" class="girl img-responsive" alt="" />
-                                    <!-- <img src="public/frontend/images/pricing.png" class="pricing" alt="" /> -->
+                                    <h1><span></span>Welcome Tocotoco</h1>
+                                    <h2>{{__('TocoToco – Trà sữa của hạnh phúc')}}</h2>
+                                    <p>{{__('Với sứ mệnh mang tới niềm vui và hạnh phúc, TocoToco hy vọng sẽ tạo nên một nét văn hóa giải trí bên cạnh ly trà sữa Ngon – sạch – tươi ')}}</p>
+                                    <img src="public/frontend/images/icon_ts.jpg" alt="" />
                                 </div>
                             </div>
 
@@ -173,22 +164,23 @@
                             <i class="fa fa-angle-right"></i>
                         </a>
                     </div>
-
                 </div>
+
             </div>
+        </div>
         </div>
     </section>
     <!--/slider-->
 
-    <section>
+    <section style="margin-top: 10px;">
         <div class="container">
             <div class="row">
-                <div class="col-sm-3">
+                <div style="margin-top: 2%;" class="col-sm-3">
                     <div class="left-sidebar">
-                    
-                        <h2 ><img src="public/frontend/images/iconhopsua.jpg" alt="" /> Danh mục sản phẩm</h2>
+
+                        <h2>{{__('Danh mục sản phẩm')}}</h2>
                         <div class="panel-group category-products" id="accordian">
-                            <!-- category-productsr-->
+                            <!-- category-products-->
                             @foreach($category as $key =>$cate)
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -197,28 +189,20 @@
                             </div>
                             @endforeach
                         </div>
-                        
                         <!--/category-products-->
-
-                        <div>
-                        
-                        </div>
-
                     </div>
                 </div>
 
                 <div class="col-sm-9 padding-right">
                     @yield('content')
                 </div>
-            </div>
-        </div>
+
     </section>
 
     <footer id="footer">
         <div class="footer-bottom">
             <div class="container">
                 <div class="row">
-                    <p class="pull-left">Copyright © 2020 ToCoToCo</p>
                     <p class="pull-right">Designed by <span><a target="_blank" href="">Linh</a></span></p>
                 </div>
             </div>
@@ -235,5 +219,8 @@
     <script src="public/frontend/js/price-range.js"></script>
     <script src="public/frontend/js/jquery.prettyPhoto.js"></script>
     <script src="public/frontend/js/main.js"></script>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0" nonce="OV0nTRfv"></script>
 </body>
+
 </html>

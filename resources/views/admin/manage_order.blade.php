@@ -5,7 +5,7 @@
     <div class="panel-heading">
       Liệt kê đơn hàng
     </div>
-    
+
     <div class="table-responsive">
       <?php
         $message = Session::get('message');
@@ -18,9 +18,9 @@
         <thead>
           <tr>
             <th>Tên người mua hàng</th>
-            <th>Tổng tiền</th> 
-            <th>Tình trạng</th> 
-            <th>Hiển thị</th>  
+            <th>Tổng tiền</th>
+            <th>Tình trạng</th>
+            <th>Hiển thị</th>
             <th style="width:30px;"></th>
           </tr>
         </thead>
@@ -30,7 +30,7 @@
             <td>{{$order->customer_name}}</td>
             <td>{{$order->order_total}}</td>
             <td>{{$order->order_status}}</td>
-            
+
             <td>
               <a href="{{URL::to('/view-order/'.$order->order_id)}}" class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active"></i></a>
@@ -44,11 +44,11 @@
     </div>
     <footer class="panel-footer">
       <div class="row">
-        
+
         <div class="col-sm-5 text-center">
           <small class="text-muted inline m-t-sm m-b-sm">Xem thêm</small>
         </div>
-        <div class="col-sm-7 text-right text-center-xs">                
+        <div class="col-sm-7 text-right text-center-xs">
           <ul class="pagination pagination-sm m-t-none m-b-none">
             <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
             <li><a href="">1</a></li>

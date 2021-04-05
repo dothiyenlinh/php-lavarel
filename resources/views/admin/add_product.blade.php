@@ -12,7 +12,10 @@
                         {{csrf_field()}}
                         <div class="form-group">
                             <label for="exampleInputEmail1">Tên sản phẩm</label>
-                            <input type="text" name="product_name" class="form-control" id="exampleInputEmail1" placeholder="Tên sản phẩm">
+                            <input type="text" name="product_name"
+                            data-validation="length" data-validation-length="min10"
+                            data-validation-error-msg="Điền ít nhất 10 kí tự" class="form-control"
+                            id="exampleInputEmail1" placeholder="Tên sản phẩm">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Danh mục sản phẩm</label>
@@ -28,7 +31,13 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Mô tả sản phẩm</label>
-                            <textarea style="resize: none" rows="7" class="form-control" name="product_desc" id="exampleInputPassword1" placeholder="Mô tả sản phẩm"></textarea>
+                            <textarea style="resize: none" rows="7" class="form-control"
+                            name="product_desc" id="ckeditor1" placeholder="Mô tả sản phẩm"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Từ khóa sản phẩm</label>
+                            <textarea style="resize: none" rows="7" class="form-control"
+                            name="product_keywords" id="editor" placeholder="Từ khóa sản phẩm"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Giá sản phẩm</label>

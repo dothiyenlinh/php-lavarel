@@ -13,9 +13,10 @@
                 <div class="single-products">
                     <div class="productinfo text-center">
                         <img src="{{URL::to('public/uploads/product/'.$product->product_image)}}" height="300px" width="80px" alt="" />
-                        <h2>{{number_format($product->product_price).' '.'VNĐ'}}</h2>
+
                         <p>{{$product->product_name}}</p>
-                        <a href="{{URL::to('/save-cart?productid_hidden='.$product->product_id.'&qty=1')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                        <a href="{{URL::to('/save-cart?productid_hidden='.$product->product_id.'&qty=1')}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>{{__('Thêm vào giỏ hàng')}}</a>
+                        <h2>{{number_format($product->product_price).' '.'VNĐ'}}</h2>
                     </div>
 
                 </div>
@@ -23,6 +24,7 @@
         </div>
     </a>
     @endforeach
+
 </div>
 <!--features_items-->
 @endsection

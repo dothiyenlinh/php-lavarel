@@ -18,7 +18,7 @@ class CartController extends Controller
     {
         $productId =$request->productid_hidden;
         $quantity = $request->qty;
-        $product_info = DB::table('tbl_product')->where('product_id',$productId)->first(); 
+        $product_info = DB::table('tbl_product')->where('product_id',$productId)->first();
 
         $data['id'] = $product_info->product_id;
         $data['qty'] = $quantity;
@@ -31,9 +31,15 @@ class CartController extends Controller
         return Redirect::to('/show-cart');
     }
 
-    public function show_cart(){
-        $cate_product = DB::table('tbl_category_product')->where('category_status','1')->orderby('category_id','desc')->get(); 
-        return view('pages.cart.show_cart')->with('category',$cate_product);
+    public function show_cart(Request $request){
+        $meta_desc = "Giỏ hàng của bạn";
+        $meta_keywords = "Giỏ hàng";
+        $meta_title = "Giỏ hàng";
+        $url_canonical = $request->url();
+        $cate_product = DB::table('tbl_category_product')->where('category_status','1')->orderby('category_id','desc')->get();
+        return view('pages.cart.show_cart')->with('category',$cate_product)
+        ->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)
+        ->with('meta_title',$meta_title)->with('url_canonical',$url_canonical);
    }
 
     public function delete_to_cart($rowId){

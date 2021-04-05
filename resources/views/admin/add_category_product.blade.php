@@ -16,7 +16,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Mô tả danh mục</label>
-                                    <textarea style="resize: none" rows="7" class="form-control" name="category_product_desc" id="exampleInputPassword1" placeholder="Mô tả danh mục"></textarea>
+                                    <textarea style="resize: none" rows="7" class="form-control" name="category_product_desc" id="editor1" placeholder="Mô tả danh mục"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Từ khóa danh mục</label>
+                                    <textarea style="resize: none" rows="7" class="form-control" name="category_product_keywords" id="ckeditor" placeholder="Từ khóa danh mục"></textarea>
                                 </div>
                                 <div class="form-group">
                                 <label for="exampleInputPassword1">Hiển thị</label>
@@ -28,8 +32,8 @@
 
                                 <button type="submit" name="add_category_product" class="btn btn-info">Thêm Vào</button>
                             </form>
-                            <div>    
-                                    
+                            <div>
+
                             </div>
                             <?php
 	                            $message = Session::get('message');

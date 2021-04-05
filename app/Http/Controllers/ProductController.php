@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 //use Session;
 use Illuminate\Support\Facades\Redirect;
+use SebastianBergmann\Environment\Console;
+
 session_start();
 
 class ProductController extends Controller
@@ -32,6 +34,7 @@ class ProductController extends Controller
         $data['product_price'] = $request->product_price;
         $data['product_status'] = $request->product_status;
         $data['product_desc'] = $request->product_desc;
+        $data['meta_keywords'] = $request->product_keywords;
         $data['category_id'] = $request->product_cate;
         $get_image = $request->file('product_image');
         if($get_image)
@@ -63,6 +66,7 @@ class ProductController extends Controller
         $data['product_price'] = $request->product_price;
         $data['product_status'] = $request->product_status;
         $data['product_desc'] = $request->product_desc;
+        $data['meta_keywords'] = $request->product_keywords;
         $data['category_id'] = $request->product_cate;
         $get_image = $request->file('product_image');
 
@@ -88,8 +92,8 @@ class ProductController extends Controller
     }
 
     //End Admin Pages
-    public function details_product($product_id){
-        $cate_product = DB::table('tbl_category_product')->where('category_status','1')->orderby('category_id','desc')->get(); 
+    public function details_product(Request $request,$product_id){
+        $cate_product = DB::table('tbl_category_product')->where('category_status','1')->orderby('category_id','desc')->get();
 
         $details_product = DB::table('tbl_product')
         ->join('tbl_category_product','tbl_category_product.category_id', '=','tbl_product.category_id')
@@ -97,12 +101,19 @@ class ProductController extends Controller
 
         foreach($details_product as $key => $value){
             $category_id = $value ->category_id;
+            $meta_desc = $value->product_desc;
+            $meta_keywords = $value->meta_keywords;
+            $meta_title = $value->product_name;
+            $url_canonical = $request->url();
         }
 
         $related_product = DB::table('tbl_product')
         ->join('tbl_category_product','tbl_category_product.category_id', '=','tbl_product.category_id')
         ->where('tbl_category_product.category_id',$category_id)->whereNotIn('tbl_product.product_id',[$product_id])->get();
 
-        return view('pages.sanpham.show_details')->with('category',$cate_product)->with('product_details',$details_product)->with('relate',$related_product);
+        return view('pages.sanpham.show_details')->with('category',$cate_product)
+        ->with('product_details',$details_product)->with('relate',$related_product)
+        ->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)
+        ->with('meta_title',$meta_title)->with('url_canonical',$url_canonical);
     }
 }
